@@ -8,7 +8,7 @@
 - `app/config.py`: Управление конфигурацией подключения к JIRA и Telegram
 - `app/jira_dao.py`: Класс `JiraDAO`, реализующий взаимодействие с JIRA REST API для поиска задач. Подробнее о API см. [здесь](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search#api-rest-api-3-search-get).
 - `app/main.py`: Запускает Telegram-бот 
-- `app/telegram_bot.py`: Cоздает Telegram-бот и прослушивает входящие сообщения. Бот реализован с использованием библиотеки [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot.git)
+- `app/telegram_bot.py`: Модуль настраивает Telegram-бот и  взаимодействует с пользователями с помощью встроенных кнопок клавиатуры. Бот реализован с использованием библиотеки [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot.git)
 - `app/task_service.py`: Модуль Python, содержащий класс `TaskService`,  предоставляет методы управления задачами в проекте JIRA:
   `get_total_issues_jira(self, query)`: метод извлекает общее количество задач в проекте JIRA.
 
@@ -20,7 +20,9 @@
 - Асинхронная обработка запросов для повышения эффективности
 
 ### Использование
-Отправьте `/start` боту в Telegram для начала работы. Команда `/getissues` возвращает общее количество задач из JIRA.
+Отправьте `/start` боту в Telegram для начала работы. `handle_keyboard` отобразит клавиатуру пользователю и предложит ему выбрать действие.
+- Команда `Fetch Jira Issues`: извлекает общее количество задач JIRA и соответствующим образом обновляет сообщение.
+- Команда`Help`: предоставляет пользователю инструкции. 
 
 ### Установка
 1. Клонируйте репозиторий. 
