@@ -3,5 +3,6 @@ botenv
 managed_context
 test_suite_analysis
 __pycache__
-vscode
+.vscode/
 tasks.db
+*.jpg
