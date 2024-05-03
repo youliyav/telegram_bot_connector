@@ -1,28 +1,20 @@
-"""
-1. Добавить FastAPI
-2. Добавить валидацию данных с Pydantic
-3. Создать модели чтения, добавления, удаления задач
-.. Создать endpoints для работы с моделями
-4. Добавить Алхимию
-5. Привязать к ней БД (postgres)
-6. Залить тестовые данные
-7. Вывести их в телеграм бот
-8. Создать связь Jira и БД через api
-"""
-
-from typing import Union
 from fastapi import FastAPI
-from pydantic import BaseModel
+
+from contextlib import asynccontextmanager
+
+from database import create_tables, delete_tables
+from router import router as tasks_router
 
 
-app = FastAPI()
-@app.get("/")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await create_tables()
+    print("База готова")
+    yield
+    await delete_tables()
+    print("База очищена")
 
 
-class STaskAdd(BaseModel):
-    name: str
-    description: Union[str, None] = None
+app = FastAPI(lifespan=lifespan)
+app.include_router(tasks_router)
 
-@app.post("/")
-async def add_task(task: STaskAdd):
-    return {"data": task}
