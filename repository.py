@@ -27,3 +27,4 @@ class TaskRepository:
             task_models = result.scalars().all()  # scalars().all() исп., чтобы выбрать все нужные результаты
             tasks = [STask.model_validate(task_model) for task_model in task_models]
             return tasks
+        
